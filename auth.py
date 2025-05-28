@@ -1,8 +1,7 @@
-
 import streamlit as st
 import bcrypt
 import sqlite3
-from db import get_connection
+from db import get_connection, ensure_admin_users_table
 
 def initialize_session_state():
     """Initialize session state variables"""
@@ -23,6 +22,7 @@ def verify_password(password: str, hashed: str) -> bool:
 
 def create_admin_user():
     """Create default admin user if not exists"""
+    ensure_admin_users_table()  # Ensure table exists before querying
     conn = get_connection()
     cursor = conn.cursor()
     
